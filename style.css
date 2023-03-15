@@ -1,0 +1,47 @@
+body {
+  background-color: darkgrey;
+}
+
+#game-window {
+  width: 800px;
+  height: 600px;
+
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  border: 4px solid black;
+  border-radius: 10px;
+
+  background-color: white;
+  overflow: hidden;
+}
+
+#game-img {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+#game-highlight {
+  position: absolute;
+
+  opacity: 0;
+
+  transform: translate(-50%, -50%);
+}
+
+#game-overlay {
+  position: absolute;
+
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+
+  opacity: 0;
+}
