@@ -6,8 +6,14 @@ const screens = {
         x: 400,
         y: 300,
         r: 100,
-        action: () => {gotoScreen("LivingRoom-South")}
-      }
+        action: () => {gotoScreen("LivingRoom-South")},
+      },
+      {
+        x: 100,
+        y: 100,
+        r: 300,
+        action: () => {playSound("testSound.mp3")},
+      },
     ],
   },
   "LivingRoom-South": {
@@ -24,6 +30,8 @@ window.onload = () => {
   gotoScreen("MainHall-South");
   document.querySelector("#game-overlay").onclick = handleClick;
   document.querySelector("#game-overlay").onmousemove = handleMouseMove;
+  window.ondrop = handleDrop;
+  window.ondragover = handleDragOver;
 }
 
 function handleMouseMove(e) {
@@ -50,18 +58,38 @@ function handleClick(e) {
   });
 }
 
+function handleDrop(e) {
+  e.preventDefault();
+  if (e.dataTransfer.files.length === 1
+    && e.dataTransfer.files[0].name === "time.knife") {
+    console.log("time knife: ", e);
+  } else {
+    console.log("not time knife: ", e);
+  }
+}
+
+function handleDragOver(e) {
+  e.preventDefault();
+}
+
 function gotoScreen(screen) {
   state.currentScreen = screen;
   document.querySelector("#game-img").src = screens[screen].img;
 }
 
+function playSound(soundFilename) {
+  const audio = new Audio(`sound/${soundFilename}`);
+
+  audio.play();
+}
+
 function showHighlight(x, y, radius) {
   const highlight = document.querySelector("#game-highlight");
 
-  highlight.style.left = x+"px";
-  highlight.style.top = y+"px";
-  highlight.style.width = radius*2+"px";
-  highlight.style.height = radius*2+"px";
+  highlight.style.left = `${x}px`;
+  highlight.style.top = `${y}px`;
+  highlight.style.width = `${radius*2}px`;
+  highlight.style.height = `${radius*2}px`;
   highlight.style.opacity = 1;
 }
 
