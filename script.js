@@ -117,14 +117,6 @@ const screens = {
     noRightTurn: true,
   },
   "LivingRoom-North": {
-    interactables: [
-      {
-        x: 217,
-        y: 297,
-        r: 50,
-        action: () => {gotoScreen("MainHall-North")},
-      }
-    ],
     arrows: [
       {
         x: 220,
@@ -263,7 +255,7 @@ const state = {
 };
 
 window.onload = () => {
-  gotoScreen("MainHall-East");
+  gotoScreen("LivingRoom-South");
   document.querySelector("#game-overlay").onclick = handleClick;
   document.querySelector("#game-overlay").onmousemove = handleMouseMove;
   window.ondrop = handleDrop;
