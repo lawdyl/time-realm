@@ -22,11 +22,10 @@ const screens = {
           gotoScreen("Hallway-Stairs");
           window.setTimeout(() => {
             gotoScreen("Hallway-Stairs-Shark");
-            playSound("Splash");
+            playSound("Scream");
             window.setTimeout(() => {
               gotoScreen("Hallway-East");
               state.inputLocked = false;
-              playSoundWithLockout("BetterNotGoThatWay");
             }, 1000)
           }, 500);
         }
@@ -70,7 +69,7 @@ const screens = {
               window.setTimeout(() => {
                 gotoScreen("Hallway-West");
                 state.inputLocked = false;
-                playSoundWithLockout("BetterNotGoThatWay");
+                playSoundWithLockout("TimeHound");
               }, 300);
             }, 500)
           }, 500);
@@ -84,7 +83,10 @@ const screens = {
         x: 416,
         y: 474,
         r: 100,
-        action: () => {gotoScreen("JakeRoom-BoardGames")},
+        action: () => {
+          gotoScreen("JakeRoom-BoardGames")
+          playSoundWithLockout("JakeRoomBoardGames");
+        },
       }
     ]
   },
@@ -100,7 +102,22 @@ const screens = {
       }
     ]
   },
-  "JakeRoom-West": {},
+  "JakeRoom-West": {
+    interactables: [
+      {
+        x: 403,
+        y: 254,
+        r: 50,
+        action: () => {
+          gotoScreen("JakeRoom-Clock");
+          playSound("JakeRoomClock")
+          window.setTimeout(() => {
+            gotoScreen("JakeRoom-West");
+          }, 4000);
+        }
+      }
+    ]
+  },
   "LivingRoom-North": {
     arrows: [
       {
@@ -133,7 +150,22 @@ const screens = {
       }
     ]
   },
-  "LivingRoom-South": {},
+  "LivingRoom-South": {
+    interactables: [
+      {
+        x: 113,
+        y: 225,
+        r: 50,
+        action: () => {
+          gotoScreen("LivingRoom-Sculpture");
+          playSound("HowLewd");
+          window.setTimeout(() => {
+          gotoScreen("LivingRoom-South");
+          }, 2500);
+        }
+      }
+    ]
+  },
   "LivingRoom-West": {
     interactables: [
       {
@@ -142,6 +174,21 @@ const screens = {
         r: 50,
         action: () => {
           gotoScreen("LivingRoom-West-WithTunnel");
+          if (!state.mazeVisited) {
+            playSoundWithLockout("LivingRoomSwitch");
+          }
+        }
+      },
+      {
+        x: 489,
+        y: 253,
+        r: 70,
+        action: () => {
+          gotoScreen("LivingRoom-JakePhoto");
+          playSound("Handsome");
+          window.setTimeout(() => {
+            gotoScreen("LivingRoom-West");
+          }, 2500);
         }
       }
     ]
@@ -170,8 +217,54 @@ const screens = {
   },
   "BathroomHallway-South": {},
   "BathroomHallway-West": {},
-  "Bathroom-North": {},
-  "Bathroom-East": {},
+  "Bathroom-North": {
+    interactables: [
+      {
+        x: 507,
+        y: 381,
+        r: 50,
+        action: () => {
+          gotoScreen("Bathroom-Diary-Closed");
+          if (state.diaryFound) {
+            playSoundWithLockout("BathroomDiaryAgain");
+          } else {
+            playSoundWithLockout("BathroomDiary");
+            state.diaryFound = true;
+          }
+        }
+      },
+      {
+        x: 274,
+        y: 445,
+        r: 100,
+        action: () => {
+          gotoScreen("Bathroom-Toilet");
+          playSound("TimeShit");
+          window.setTimeout(() => {
+            gotoScreen("Bathroom-North");
+          }, 3500);
+        }
+      }
+    ]
+  },
+  "Bathroom-East": {
+    interactables: [
+      {
+        x: 87,
+        y: 465,
+        r: 50,
+        action: () => {
+          gotoScreen("Bathroom-Diary-Closed");
+          if (state.diaryFound) {
+            playSoundWithLockout("BathroomDiaryAgain");
+          } else {
+            playSoundWithLockout("BathroomDiary");
+            state.diaryFound = true;
+          }
+        }
+      }
+    ]
+  },
   "Bathroom-South": {
     arrows: [
       {
@@ -184,7 +277,16 @@ const screens = {
     ]
   },
   "Bathroom-West": {},
-  "SecretRoom-North": {},
+  "SecretRoom-North": {
+    interactables: [
+      {
+        x: 225,
+        y: 365,
+        r: 120,
+        action: () => {playSoundWithLockout("SecretRoomScreen")}
+      }
+    ]
+  },
   "SecretRoom-East": {},
   "SecretRoom-South": {
     arrows: [
@@ -199,6 +301,12 @@ const screens = {
   },
   "SecretRoom-West": {
     interactables: [
+      {
+        x: 73,
+        y: 395,
+        r: 90,
+        action: () => {playSoundWithLockout("NoPulse")}
+      },
       {
         x: 216,
         y: 436,
@@ -247,6 +355,13 @@ const screens = {
           state.mazeDepth = 0;
           state.mazeCorrect = true;
           gotoScreen("Maze");
+
+          if (state.mazeVisited) {
+            playSoundWithLockout("MazeAgain");
+          } else {
+            playSoundWithLockout("MazeFirst");
+            state.mazeVisited = true;
+          }
         }
       }
     ]
@@ -295,6 +410,7 @@ const screens = {
         action: () => {
           loopSoundEnd("EerieAmbience");
           gotoScreen("SecretRoom-North")
+          playSoundWithLockout("RoomInGlasgow");
         }
       }
     ]
@@ -320,6 +436,307 @@ const screens = {
     noLeftTurn: true,
     noRightTurn: true,
   },
+  "Bathroom-Diary-Closed": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 183,
+        y: 519,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page1")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page1": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page2")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Closed")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page2": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page3")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page1")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page3": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page4")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page2")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page4": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page5")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page3")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page5": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page6")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page4")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page6": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page7")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page5")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page7": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page8")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page6")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page8": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page9")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page7")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page9": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 142,
+        y: 463,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page10")}
+      },
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page8")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Diary-Page10": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    interactables: [
+      {
+        x: 583,
+        y: 464,
+        r: 100,
+        action: () => {gotoScreen("Bathroom-Diary-Page9")}
+      }
+    ],
+    arrows: [
+      {
+        x: 711,
+        y: 511,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("Bathroom-East")}
+      }
+    ]
+  },
+  "Bathroom-Toilet": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
+  "JakeRoom-Clock": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
+  "LivingRoom-JakePhoto": {
+    noLeftTurn: true,
+    noRightTurn: true
+  },
+  "LivingRoom-Sculpture": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
   "Black": {
     noLeftTurn: true,
     noRightTurn: true,
@@ -332,23 +749,31 @@ const audioList = [
   "Locked3",
   "Locked4",
   "Locked5",
-  "Heh",
-  "BunnyNotBird",
-  "TimeShit",
-  "Foot",
-  "TimeClock",
   "Woof",
-  "Splash",
-  "BetterNotGoThatWay",
-  "WrongWay",
+  "Scream",
   "Static",
   "EerieAmbience",
   "Jumpscare",
   "Footsteps",
   "FootstepsRunning",
-  "NotToday",
   "Stab",
   "Explosion",
+  "BathroomDiary",
+  "BathroomDiaryAgain",
+  "TimeShit",
+  "JakeRoomBoardGames",
+  "JakeRoomClock",
+  "TimeHound",
+  "LivingRoomSwitch",
+  "Handsome",
+  "MazeFirst",
+  "MazeAgain",
+  "HowLewd",
+  "RoomInGlasgow",
+  "SecretRoomScreen",
+  "SeeBody",
+  "NoPulse",
+  "ThisOnesForJake",
 ]
 const audioObjects = {};
 
@@ -361,6 +786,9 @@ const state = {
   mazeDepth: null,
   mazeCorrect: null,
   timeKnifeActive: false,
+  diaryFound: false,
+  mazeVisited: false,
+  bodySeen: false,
 };
 
 const mazeSolution = [1, 3, 2, 3, 2, 1];
@@ -390,14 +818,14 @@ function handleClick(e) {
   console.log(x, y);
 
   if (!state.inputLocked) {
-    if (withinLeftTurnArrow(x, y)) {
+    if (withinLeftTurnArrow(x, y) && !screens[state.currentScreen].noLeftTurn) {
       turnLeft();
       return;
-    } else if (withinRightTurnArrow(x, y)) {
+    } else if (withinRightTurnArrow(x, y) && !screens[state.currentScreen].noRightTurn) {
       turnRight();
       return;
     }
-
+    
     screens[state.currentScreen].interactables?.forEach(interactable => {
       if (withinRadius(x-interactable.x, y-interactable.y, interactable.r)) {
         interactable.action();
@@ -452,6 +880,11 @@ function gotoScreen(screen) {
     document.querySelector("#game-img").src
       = `img/screen/flipped-posterised/Corridor${corridorNumber}.jpg`;
   } else {
+    if (screen === "SecretRoom-West" && !state.bodySeen) {
+      state.bodySeen = true;
+      playSoundWithLockout("SeeBody");
+    }
+
     document.querySelector("#game-img").src
       = `img/screen/flipped-posterised/${screen}.jpg`;
     loopSoundEnd("Static");
@@ -577,7 +1010,7 @@ function mazeDeath() {
     gotoScreen("CorridorDeath");
     playSound("Jumpscare");
     window.setTimeout(() => {
-     playSound("NotToday");
+     playSound("ThisOnesForJake");
       window.setTimeout(() => {
         document.querySelector("#game-time-knife").style.opacity = 0;
         gotoScreen("CorridorBunnyDead");
@@ -593,7 +1026,7 @@ function mazeDeath() {
             gotoScreen("YouWin");
           }, 1000);
         }, 2000);
-      }, 5000);
+      }, 3300);
     }, 700);
   } else {
     gotoScreen("CorridorDeath");
@@ -640,10 +1073,10 @@ function loopSoundEnd(sound) {
 function decideHighlights(x, y) {
   hideHighlights();
 
-  if (withinLeftTurnArrow(x, y)) {
+  if (withinLeftTurnArrow(x, y) && !screens[state.currentScreen].noLeftTurn) {
     highlightLeftTurnArrow();
     return;
-  } else if (withinRightTurnArrow(x, y)) {
+  } else if (withinRightTurnArrow(x, y) && !screens[state.currentScreen].noRightTurn) {
     highlightRightTurnArrow();
     return;
   }
