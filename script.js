@@ -288,6 +288,18 @@ const screens = {
             state.diaryFound = true;
           }
         }
+      },
+      {
+        x: 277,
+        y: 284,
+        r: 50,
+        action: () => {
+          gotoScreen("Bathroom-Mirror");
+          playSound("WolfWhistle");
+          window.setTimeout(() => {
+            gotoScreen("Bathroom-East");
+          }, 1000);
+        }
       }
     ]
   },
@@ -377,7 +389,10 @@ const screens = {
         x: 400,
         y: 257,
         r: 120,
-        action: () => {gotoScreen("ComputerRoom-Fish")}
+        action: () => {
+          gotoScreen("ComputerRoom-Fish");
+          playSoundWithLockout("ComputerRoomFish");
+        }
       }
     ]
   },
@@ -823,6 +838,10 @@ const screens = {
     noLeftTurn: true,
     noRightTurn: true,
   },
+  "JakeRoom-Clock": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
   "Bathroom-Toilet": {
     noLeftTurn: true,
     noRightTurn: true,
@@ -830,6 +849,10 @@ const screens = {
   "Bathroom-Bird": {
     noLeftTurn: true,
     noRightTurn: true,
+  },
+  "Bathroom-Mirror": {
+    turnLeft: true,
+    turnRight: true,
   },
   "Black": {
     noLeftTurn: true,
@@ -874,6 +897,8 @@ const audioList = [
   "BarelyAlive",
   "SecretRoomId",
   "SecretRoomFolder",
+  "ComputerRoomFish",
+  "WolfWhistle",
 ]
 const audioObjects = {};
 
