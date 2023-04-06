@@ -851,8 +851,8 @@ const screens = {
     noRightTurn: true,
   },
   "Bathroom-Mirror": {
-    turnLeft: true,
-    turnRight: true,
+    noLeftTurn: true,
+    noRightTurn: true,
   },
   "Black": {
     noLeftTurn: true,
