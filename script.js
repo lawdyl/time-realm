@@ -1,152 +1,123 @@
 const screens = {
-  "JakeRoom-North": {
-    interactables: [
-      {
-        x: 113,
-        y: 410,
-        r: 75,
-        action: () => {playSoundWithLockout("WrongWay")},
-      }
-    ]
-  },
-  "JakeRoom-East": {
-    interactables: [
-      {
-        x: 401,
-        y: 221,
-        r: 50,
-        action: () => {playSoundWithLockout("TimeClock")},
-      }
-    ]
-  },
-  "JakeRoom-South": {
+  "Hallway-North": {
     arrows: [
       {
-        x: 216,
-        y: 450,
+        x: 280,
+        y: 496,
         height: 150,
-        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(7deg)",
-        action: () => {gotoScreen("MainHall-South")}
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(8deg)",
+        action: () => {gotoScreen("JakeRoom-North")}
       }
-    ],
-    interactables: [
+    ]
+  },
+  "Hallway-East": {
+    arrows: [
       {
-        x: 400,
-        y: 213,
-        r: 50,
+        x: 364,
+        y: 515,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(1deg)",
         action: () => {
           state.inputLocked = true;
-          gotoScreen("JakeRoom-South-PictureZoom");
-          playSound("Foot");
+          gotoScreen("Hallway-Stairs");
           window.setTimeout(() => {
-            gotoScreen("JakeRoom-South");
-            state.inputLocked = false;
-          }, 3300);
+            gotoScreen("Hallway-Stairs-Shark");
+            playSound("Splash");
+            window.setTimeout(() => {
+              gotoScreen("Hallway-East");
+              state.inputLocked = false;
+              playSoundWithLockout("BetterNotGoThatWay");
+            }, 1000)
+          }, 500);
         }
-      },
-    ],
-  },
-  "JakeRoom-West": {},
-  "JakeRoom-South-PictureZoom": {
-    noLeftTurn: true,
-    noRightTurn: true,
-  },
-  "MainHall-North": {
-    arrows: [
-      {
-        x: 550,
-        y: 500,
-        height: 150,
-        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(-12deg)",
-        action: () => {gotoScreen("JakeRoom-North")},
       }
     ]
   },
-  "MainHall-East": {
+  "Hallway-South": {
     arrows: [
       {
-        x: 325,
+        x: 310,
+        y: 516,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(4deg)",
+        action: () => {gotoScreen("LivingRoom-South")}
+      }
+    ]
+  },
+  "Hallway-West": {
+    arrows: [
+      {
+        x: 478,
         y: 475,
         height: 150,
-        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(-3deg)",
-        action: () => {gotoScreen("BathroomHall-East")},
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(-2deg)",
+        action: () => {gotoScreen("BathroomHallway-West")}
       }
     ],
-    interactables: [
+    "interactables": [
       {
-        x: 445,
-        y: 368,
+        x: 367,
+        y: 390,
         r: 100,
         action: () => {
           state.inputLocked = true;
-          gotoScreen("MainHall-East-UpstairsDoor");
+          gotoScreen("Hallway-UpstairsDoor");
           window.setTimeout(() => {
-            gotoScreen("MainHall-East-UpstairsDoor-Eyes");
+            gotoScreen("Hallway-UpstairsDoor-Eyes");
             playSound("Woof");
             window.setTimeout(() => {
-              gotoScreen("MainHall-East-UpstairsDoor");
+              gotoScreen("Hallway-UpstairsDoor");
               window.setTimeout(() => {
-                gotoScreen("MainHall-East");
+                gotoScreen("Hallway-West");
                 state.inputLocked = false;
                 playSoundWithLockout("BetterNotGoThatWay");
               }, 300);
             }, 500)
           }, 500);
-        },
+        }
       }
     ]
   },
-  "MainHall-South": {
+  "JakeRoom-North": {
+    interactables: [
+      {
+        x: 416,
+        y: 474,
+        r: 100,
+        action: () => {gotoScreen("JakeRoom-BoardGames")},
+      }
+    ]
+  },
+  "JakeRoom-East": {},
+  "JakeRoom-South": {
     arrows: [
       {
-        x: 492,
-        y: 550,
-        height: 150,
-        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(-5deg)",
-        action: () => {gotoScreen("LivingRoom-South")},
+        x: 608,
+        y: 470,
+        height: 120,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(-7deg)",
+        action: () => {gotoScreen("Hallway-South")}
       }
     ]
   },
-  "MainHall-West": {},
-  "MainHall-East-UpstairsDoor": {
-    noLeftTurn: true,
-    noRightTurn: true,
-  },
-  "MainHall-East-UpstairsDoor-Eyes": {
-    noLeftTurn: true,
-    noRightTurn: true,
-  },
+  "JakeRoom-West": {},
   "LivingRoom-North": {
     arrows: [
       {
-        x: 220,
-        y: 410,
-        height: 150,
-        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(10deg)",
-        action: () => {gotoScreen("MainHall-North")},
+        x: 571,
+        y: 394,
+        height: 120,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(-7deg)",
+        action: () => {gotoScreen("Hallway-North")}
       }
     ]
   },
-  "LivingRoom-East": {},
-  "LivingRoom-South": {},
-  "LivingRoom-West": {},
-  "BathroomHall-North": {
-    arrows: [
-      {
-        x: 376,
-        y: 525,
-        height: 150,
-        transform: "translate(-50%, -50%) rotateX(50deg) rotateZ(0deg)",
-        action: () => {gotoScreen("Bathroom-North")},
-      }
-    ]
-  },
-  "BathroomHall-East": {
+  "LivingRoom-East": {
     interactables: [
       {
-        x: 543,
-        y: 360,
-        r: 75,
+        x: 678,
+        y: 339,
+        r: 100,
         action: () => {
           const now = Date.now();
           if (now - state.lockedDoorLastClickTime > 10000
@@ -162,71 +133,197 @@ const screens = {
       }
     ]
   },
-  "BathroomHall-South": {},
-  "BathroomHall-West": {
+  "LivingRoom-South": {},
+  "LivingRoom-West": {
+    interactables: [
+      {
+        x: 287,
+        y: 133,
+        r: 50,
+        action: () => {
+          gotoScreen("LivingRoom-West-WithTunnel");
+        }
+      }
+    ]
+  },
+  "BathroomHallway-North": {
     arrows: [
       {
-        x: 275,
-        y: 550,
-        height: 150,
-        transform: "translate(-50%, -50%) rotateX(50deg) rotateZ(0deg)",
-        action: () => {gotoScreen("MainHall-West")},
+        x: 439,
+        y: 534,
+        height: 200,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(0deg)",
+        action: () => {gotoScreen("Bathroom-North")}
       }
     ]
   },
-  "Bathroom-North": {
-    interactables: [
+  "BathroomHallway-East": {
+    arrows: [
       {
-        x: 540,
-        y: 508,
-        r: 100,
-        action: () => {playSoundWithLockout("TimeShit")}
+        x: 507,
+        y: 524,
+        height: 200,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(0deg)",
+        action: () => {gotoScreen("Hallway-East")}
       }
     ]
   },
-  "Bathroom-East": {
-    interactables: [
-      {
-        x: 350,
-        y: 111,
-        r: 100,
-        action: () => {playSoundWithLockout("BunnyNotBird")},
-      }
-    ]
-  },
+  "BathroomHallway-South": {},
+  "BathroomHallway-West": {},
+  "Bathroom-North": {},
+  "Bathroom-East": {},
   "Bathroom-South": {
     arrows: [
       {
-        x: 509,
-        y: 475,
-        height: 150,
-        transform: "translate(-50%, -50%) rotateX(60deg) rotateZ(-4deg)",
-        action: () => {gotoScreen("BathroomHall-South")},
+        x: 307,
+        y: 459,
+        height: 120,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(2deg)",
+        action: () => {gotoScreen("BathroomHallway-South")}
       }
     ]
   },
-  "Bathroom-West": {
-    interactables: [
+  "Bathroom-West": {},
+  "SecretRoom-North": {},
+  "SecretRoom-East": {},
+  "SecretRoom-South": {
+    arrows: [
       {
-        x: 544,
-        y: 221,
-        r: 100,
-        action: () => {
-          state.inputLocked = true;
-          gotoScreen("Bathroom-West-MirrorZoom");
-          playSound("Heh");
-          window.setTimeout(() => {
-            gotoScreen("Bathroom-West");
-            state.inputLocked = false;
-          }, 1000);
-        },
-      },
+        x: 235,
+        y: 491,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(0deg)",
+        action: () => {gotoScreen("LivingRoom-West")}
+      }
     ]
   },
-  "Bathroom-West-MirrorZoom": {
+  "SecretRoom-West": {
+    interactables: [
+      {
+        x: 216,
+        y: 436,
+        r: 50,
+        action: () => {gotoScreen("SecretRoom-Id")}
+      }
+    ]
+  },
+  "Hallway-UpstairsDoor": {
     noLeftTurn: true,
     noRightTurn: true,
   },
+  "Hallway-UpstairsDoor-Eyes": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
+  "Hallway-Stairs": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
+  "Hallway-Stairs-Shark": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
+  "JakeRoom-BoardGames": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    arrows: [
+      {
+        x: 622,
+        y: 520,
+        height: 200,
+        transform: "translate(-50%, -50%) rotateX(60deg) rotateZ(-200deg)",
+        action: () => {gotoScreen("JakeRoom-North")}
+      }
+    ]
+  },
+  "LivingRoom-West-WithTunnel": {
+    arrows: [
+      {
+        x: 182,
+        y: 444,
+        height: 120,
+        transform: "translate(-50%, -50%) rotateX(65deg) rotateZ(8deg)",
+        action: () => {
+          state.mazeDepth = 0;
+          state.mazeCorrect = true;
+          gotoScreen("Maze");
+        }
+      }
+    ]
+  },
+  "Maze": {
+    noLeftTurn: true,
+    noRightTurn: true,
+
+    arrows: [
+      {
+        x: 340,
+        y: 402,
+        height: 90,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-60deg)",
+        action: () => {mazeGoLeft()}
+      },
+      {
+        x: 440,
+        y: 402,
+        height: 90,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(60deg)",
+        action: () => {mazeGoRight()}
+      },
+      {
+        x: 390,
+        y: 356,
+        height: 90,
+        transform: "translate(-50%, -50%) rotateX(60deg) rotateZ(0deg)",
+        action: () => {mazeGoStraight()}
+      }
+    ]
+  },
+  "CorridorDeath": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
+  "CorridorWin": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    arrows: [
+      {
+        x: 395,
+        y: 420,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(60deg) rotateZ(0deg)",
+        action: () => {
+          loopSoundEnd("EerieAmbience");
+          gotoScreen("SecretRoom-North")
+        }
+      }
+    ]
+  },
+  "CorridorBunnyDead": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
+  "SecretRoom-Id": {
+    noLeftTurn: true,
+    noRightTurn: true,
+    arrows: [
+      {
+        x: 155,
+        y: 495,
+        height: 150,
+        transform: "translate(-50%, -50%) rotateX(45deg) rotateZ(-180deg)",
+        action: () => {gotoScreen("SecretRoom-West")}
+      }
+    ],
+  },
+  "YouWin": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  },
+  "Black": {
+    noLeftTurn: true,
+    noRightTurn: true,
+  }
 };
 
 const audioList = [
@@ -241,8 +338,17 @@ const audioList = [
   "Foot",
   "TimeClock",
   "Woof",
+  "Splash",
   "BetterNotGoThatWay",
   "WrongWay",
+  "Static",
+  "EerieAmbience",
+  "Jumpscare",
+  "Footsteps",
+  "FootstepsRunning",
+  "NotToday",
+  "Stab",
+  "Explosion",
 ]
 const audioObjects = {};
 
@@ -252,10 +358,15 @@ const state = {
   inputLocked: false,
   lockedDoorLastClickTime: 0,
   lockedDoorCounter: 0,
+  mazeDepth: null,
+  mazeCorrect: null,
+  timeKnifeActive: false,
 };
 
+const mazeSolution = [1, 3, 2, 3, 2, 1];
+
 window.onload = () => {
-  gotoScreen("LivingRoom-South");
+  gotoScreen("JakeRoom-South");
   document.querySelector("#game-overlay").onclick = handleClick;
   document.querySelector("#game-overlay").onmousemove = handleMouseMove;
   window.ondrop = handleDrop;
@@ -305,9 +416,14 @@ function handleDrop(e) {
   e.preventDefault();
   if (e.dataTransfer.files.length === 1
     && e.dataTransfer.files[0].name === "time.knife") {
-    console.log("time knife: ", e);
+    state.timeKnifeActive = true;
+    document.querySelector("#game-time-knife").style.opacity = "1";
   } else {
-    console.log("not time knife: ", e);
+    console.log("function to get time knife if not working:");
+    console.log(() => {
+      state.timeKnifeActive = true;
+      document.querySelector("#game-time-knife").style.opacity = "1";
+    });
   }
 }
 
@@ -323,9 +439,25 @@ function preloadAudio() {
 }
 
 function gotoScreen(screen) {
+  if (screen === "LivingRoom-West-WithTunnel") {
+    document.querySelector("#game-img").src
+      = "img/screen/flipped-posterised/LivingRoom-West-WithTunnel.webp";
+    loopSoundStart("Static")
+  } else if (screen === "Maze") {
+    loopSoundEnd("Static");
+    loopSoundStart("EerieAmbience");
+
+    const corridorNumber = state.mazeDepth % 5 + 1;
+
+    document.querySelector("#game-img").src
+      = `img/screen/flipped-posterised/Corridor${corridorNumber}.jpg`;
+  } else {
+    document.querySelector("#game-img").src
+      = `img/screen/flipped-posterised/${screen}.jpg`;
+    loopSoundEnd("Static");
+  }
   state.currentScreen = screen;
-  document.querySelector("#game-img").src = `img/screen/${screen}.jpg`;
-  
+
   decideHighlights(state.lastMouseCoords.x, state.lastMouseCoords.y);
   
   removeArrows();
@@ -379,6 +511,104 @@ function turnRight() {
   gotoScreen(`${room}-${newDirection}`);
 }
 
+function mazeGoLeft() {
+  if (state.mazeCorrect && mazeSolution[state.mazeDepth] !== 1) {
+    state.mazeCorrect = false;
+  }
+
+  state.mazeDepth += 1;
+
+  if (state.mazeDepth === 6) {
+    if (state.mazeCorrect) {
+      mazeWin();
+    } else {
+      mazeDeath();
+    }
+  } else {
+    playSoundWithLockout("Footsteps");
+    gotoScreen("Maze");
+  }
+}
+
+function mazeGoStraight() {
+  if (state.mazeCorrect && mazeSolution[state.mazeDepth] !== 2) {
+    state.mazeCorrect = false;
+  }
+
+  state.mazeDepth += 1;
+
+  if (state.mazeDepth === 6) {
+    if (state.mazeCorrect) {
+      mazeWin();
+    } else {
+      mazeDeath();
+    }
+  } else {
+    playSoundWithLockout("Footsteps");
+    gotoScreen("Maze");
+  }
+}
+function mazeGoRight() {
+  if (state.mazeCorrect && mazeSolution[state.mazeDepth] !== 3) {
+    state.mazeCorrect = false;
+  }
+
+  state.mazeDepth += 1;
+
+  if (state.mazeDepth === 6) {
+    if (state.mazeCorrect) {
+      mazeWin();
+    } else {
+      mazeDeath();
+    }
+  } else {
+    playSoundWithLockout("Footsteps");
+    gotoScreen("Maze");
+  }
+}
+
+function mazeWin() {
+  playSoundWithLockout("Footsteps");
+  gotoScreen("CorridorWin");
+}
+
+function mazeDeath() {
+  if (state.timeKnifeActive) {
+    gotoScreen("CorridorDeath");
+    playSound("Jumpscare");
+    window.setTimeout(() => {
+     playSound("NotToday");
+      window.setTimeout(() => {
+        document.querySelector("#game-time-knife").style.opacity = 0;
+        gotoScreen("CorridorBunnyDead");
+        playSound("Stab");
+        window.setTimeout(() => {
+          const explosion = document.querySelector("#game-explosion");
+          explosion.style.opacity = 1;
+          explosion.src = "img/Explosion.gif";
+          playSound("Explosion");
+          window.setTimeout(() => {
+            explosion.style.opacity = 0;
+            loopSoundEnd("EerieAmbience");
+            gotoScreen("YouWin");
+          }, 1000);
+        }, 2000);
+      }, 5000);
+    }, 700);
+  } else {
+    gotoScreen("CorridorDeath");
+    playSound("Jumpscare");
+    window.setTimeout(() => {
+      gotoScreen("Black");
+      playSound("FootstepsRunning");
+      window.setTimeout(() => {
+        gotoScreen("LivingRoom-West");
+        loopSoundEnd("EerieAmbience");
+      }, 1000);
+    }, 700);
+  }
+}
+
 function playSound(sound) {
   audioObjects[sound].play();
 }
@@ -392,7 +622,19 @@ function playSoundWithLockout(sound) {
 
   window.setTimeout(() => {
     state.inputLocked = false;
-  }, audio.duration * 1000);
+  }, audio.duration * 1000 + 200);
+}
+
+function loopSoundStart(sound) {
+  audioObjects[sound].loop = true;
+  audioObjects[sound].play();
+}
+
+function loopSoundEnd(sound) {
+  if (audioObjects[sound]) {
+    audioObjects[sound].loop = false;
+    audioObjects[sound].pause();
+  }
 }
 
 function decideHighlights(x, y) {
@@ -503,9 +745,9 @@ function withinRadius(x, y, r) {
 }
 
 function withinLeftTurnArrow(x, y) {
-  return x < 150 && y > (600-150);
+  return x < 120 && y > (600-120);
 }
 
 function withinRightTurnArrow(x, y) {
-  return x > (800-150) && y > (600-150)
+  return x > (800-120) && y > (600-120)
 }

@@ -30,6 +30,28 @@ body {
   image-rendering: pixelated;
 }
 
+#game-time-knife {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+  width: 400px;
+  height: 450px;
+
+  opacity: 0;
+}
+
+#game-explosion {
+  position: absolute;
+
+  left: 50%;
+  top: 50%;
+  width: 200px;
+
+  transform: translate(-50%, -50%);
+  opacity: 0;
+}
+
 #game-highlight {
   position: absolute;
 
@@ -41,8 +63,8 @@ body {
 #game-left-turn {
   position: absolute;
 
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
 
   left: 0;
   bottom: 0;
@@ -53,8 +75,8 @@ body {
 #game-right-turn {
   position: absolute;
 
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
 
   right: 0;
   bottom: 0;
